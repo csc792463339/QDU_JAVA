@@ -1,0 +1,10 @@
+@font-face {
+    font-family: csc;
+    src: url('/css/csc.woff'),
+    url('/css/csc.ttf'),
+    url('/css/csc.woff');
+}
+
+* {
+    font-family: csc;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game</title>
+    <link rel="stylesheet"
+          href="font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="css/csc.css">
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.touchSwipe.min.js"></script>
+</head>
+<body>
+
+<div class="modal fade" id="start" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    Java兴趣社团
+                </h4>
+            </div>
+            <div class="modal-body">
+                请选择您要出的手势:
+            </div>
+            <div id='div1' class="modal-footer">
+                <button id="btn2" type="button" class="btn btn-default"><i class="fa fa-hand-peace-o fa-3x"></i>
+                </button>
+                <button id="btn1" type="button" class="btn btn-default"><i class="fa fa-hand-paper-o fa-3x"></i>
+                </button>
+                <button id="btn0" type="button" class="btn btn-default"><i class="fa fa-hand-grab-o fa-3x"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="end" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">
+                    Java兴趣社团
+                </h4>
+            </div>
+            <div class="modal-body" id="result">
+            </div>
+            <div class="modal-footer">
+                <button id="btn4" type="button" class="btn btn-default"><i class="fa fa-refresh"></i>再玩一次</button>
+                <button id="btn5" type="button" class="btn btn-default" onclick="window.location.href='index.html'"><i
+                        class="fa fa-remove"></i>不玩了
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function icon(s) {
+        switch (s) {
+            case 2: {
+                return '<i class="fa fa-hand-peace-o fa-3x"></i>';
+                break;
+            }
+            case 1: {
+                return '<i class="fa fa-hand-paper-o fa-3x"></i>';
+                break;
+            }
+            case 0: {
+                return '<i class="fa fa-hand-grab-o fa-3x"></i>';
+                break;
+            }
+        }
+    }
+    function game(player1, player2) {
+        var i = player1 - player2;
+        var text = "您出的是:" + icon(player1) + "<br/> 对方出的是:" + icon(player2) + "<br />结果:";
+        switch (i) {
+            case 0: {
+                $('#result').html(text + " 平！");
+                break;
+            }
+            case 1:
+            case  -2: {
+                $('#result').html(text + " 您赢了！");
+                break;
+            }
+            case -1:
+            case 2: {
+                $('#result').html(text + " 您输了！");
+                break;
+            }
+        }
+        $('#end').modal();
+    }
+
+    $(function () {
+        $('#start').modal();
+        $("#div1 button").click(function () {
+            $('#start').modal('hide');
+            var player2 = Math.floor(Math.random() * 10 % 3);
+            var player1 = parseInt($(this).attr('id').substr(3, 1));
+            game(player1, player2);
+        });
+        $("#btn4").click(function () {
+            $('#end').modal('hide');
+            $('#start').modal();
+        })
+    });
+</script>
+</body>
+</html>

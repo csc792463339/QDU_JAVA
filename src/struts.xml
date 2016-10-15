@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="false"/>
+
+    <package name="javaclub" extends="struts-default">
+
+        <action name="memberRegister" class="com.java.strutsaction.memberRegister">
+            <result name="success">/successRegister.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="confirm" class="com.java.strutsaction.memberConfirm">
+            <result name="success">/successConfirm.jsp</result>
+            <result name="error">/index.html</result>
+        </action>
+
+        <action name="searchByPhone" class="com.java.strutsaction.searchByPhone">
+            <result name="success">/memberConfirmByPhone.jsp</result>
+            <result name="failed">/searchByQQ.jsp</result>
+        </action>
+
+        <action name="searchByQQ" class="com.java.strutsaction.searchByQQ">
+            <result name="success">/memberConfirmByQQ.jsp</result>
+            <result name="failed">/notFound.jsp</result>
+        </action>
+
+
+        <action name="memberChangeDep" class="com.java.strutsaction.memberChangeDep">
+            <result name="success">/successDep.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="adminLogin" class="com.java.strutsaction.adminLogin">
+            <result name="success">/adminInfo.jsp</result>
+            <result name="error">/adminLogin.jsp</result>
+        </action>
+
+        <action name="memberPresent" class="com.java.strutsaction.memberPresent">
+            <result name="success">/successConfirm.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="memberAbsent" class="com.java.strutsaction.memberAbsent">
+            <result name="success" type="redirect">/adminInfo.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+
+        <action name="submitQuestion" class="com.java.strutsaction.submitQuestion">
+            <result name="success">/queryQuestion.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+
+        <action name="likeQuestion" class="com.java.strutsaction.likeQuestion">
+            <result name="success">/queryQuestion.jsp</result>
+        </action>
+
+    </package>
+</struts>

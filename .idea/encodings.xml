@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="false" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/com/java/bean/Member.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/bean/Present.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/bean/Question.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/memberAbsent.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/memberChangeDep.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/memberConfirm.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/memberPresent.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/memberRegister.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/searchByPhone.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/searchByQQ.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/strutsaction/submitQuestion.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/java/test/test.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
