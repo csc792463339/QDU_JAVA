@@ -9,56 +9,115 @@
     <package name="javaclub" extends="struts-default">
 
         <action name="memberRegister" class="com.java.strutsaction.memberRegister">
-            <result name="success">/successRegister.jsp</result>
+            <result name="success">/member/successRegister.jsp</result>
             <result name="error">/error.jsp</result>
         </action>
 
         <action name="confirm" class="com.java.strutsaction.memberConfirm">
-            <result name="success">/successConfirm.jsp</result>
+            <result name="success">/member/successConfirm.jsp</result>
             <result name="error">/index.html</result>
         </action>
 
         <action name="searchByPhone" class="com.java.strutsaction.searchByPhone">
-            <result name="success">/memberConfirmByPhone.jsp</result>
-            <result name="failed">/searchByQQ.jsp</result>
+            <result name="success">/member/memberConfirmByPhone.jsp</result>
+            <result name="failed">/member/searchByQQ.jsp</result>
         </action>
 
         <action name="searchByQQ" class="com.java.strutsaction.searchByQQ">
-            <result name="success">/memberConfirmByQQ.jsp</result>
-            <result name="failed">/notFound.jsp</result>
+            <result name="success">/member/memberConfirmByQQ.jsp</result>
+            <result name="failed">/member/notFound.jsp</result>
         </action>
 
 
         <action name="memberChangeDep" class="com.java.strutsaction.memberChangeDep">
-            <result name="success">/successDep.jsp</result>
+            <result name="success">/member/successDep.jsp</result>
             <result name="error">/error.jsp</result>
         </action>
 
         <action name="adminLogin" class="com.java.strutsaction.adminLogin">
-            <result name="success">/adminInfo.jsp</result>
-            <result name="error">/adminLogin.jsp</result>
+            <result name="success">/admin/adminInfo.jsp</result>
+            <result name="error">/admin/adminLogin.jsp</result>
         </action>
+
+        <action name="setPresent" class="com.java.strutsaction.setPresent">
+            <result name="success">/admin/adminSet.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="setBookSite" class="com.java.strutsaction.setBookSite">
+            <result name="success">/admin/adminSet.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
 
         <action name="memberPresent" class="com.java.strutsaction.memberPresent">
-            <result name="success">/successConfirm.jsp</result>
+            <result name="success">/member/successPresent.jsp</result>
             <result name="error">/error.jsp</result>
         </action>
 
-        <action name="memberAbsent" class="com.java.strutsaction.memberAbsent">
-            <result name="success" type="redirect">/adminInfo.jsp</result>
-            <result name="error">/error.jsp</result>
-        </action>
-
-
-        <action name="submitQuestion" class="com.java.strutsaction.submitQuestion">
-            <result name="success">/queryQuestion.jsp</result>
+        <action name="addPresent" class="com.java.strutsaction.addPresent">
+            <result name="success">/admin/adminSet.jsp</result>
             <result name="error">/error.jsp</result>
         </action>
 
 
-        <action name="likeQuestion" class="com.java.strutsaction.likeQuestion">
-            <result name="success">/queryQuestion.jsp</result>
+        <action name="BookSite" class="com.java.strutsaction.bookSite">
+            <result name="success">/member/successBooked.jsp</result>
+            <result name="error">/error.jsp</result>
+            <result name="full">/member/siteOver.jsp</result>
         </action>
 
+        <action name="submitMessage" class="com.java.strutsaction.submitMessage">
+            <result name="success">/message/queryMessage.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="likeMessage" class="com.java.strutsaction.likeMessage">
+            <result name="success">/message/queryMessage.jsp</result>
+        </action>
+
+        <action name="submitSuggest" class="com.java.strutsaction.submitSuggest">
+            <result name="success">/message/successSuggest.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+
+    </package>
+
+
+    <package name="competition" extends="struts-default">
+
+
+        <action name="competitionMember" class="com.java.strutsaction.competitionMember">
+            <result name="success">/competition/competitionSuccessMember.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="comitTeam" class="com.java.strutsaction.competitionTeam">
+            <result name="success">/competition/competitionSuccessProject.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+        <action name="likeTeam" class="com.java.strutsaction.likeTeam">
+            <result name="success">/competition/showCompetitionProject.jsp</result>
+        </action>
+
+        <action name="setCurrent" class="com.java.strutsaction.setCurrent">
+            <result name="success">/admin/competitionInfo.jsp</result>
+        </action>
+
+        <action name="competitionScore" class="com.java.strutsaction.competitionScore">
+            <result name="success">/competition/competitionJudge.jsp</result>
+            <result name="error">/error.jsp</result>
+        </action>
+
+    </package>
+
+    <package name="getMember" namespace="/" extends="json-default">
+        <action name="getMember" class="com.java.strutsaction.competitionGetMember">
+            <result type="json">
+                <param name="root">result</param>
+            </result>
+        </action>
     </package>
 </struts>

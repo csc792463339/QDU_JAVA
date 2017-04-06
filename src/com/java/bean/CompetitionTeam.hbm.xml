@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.java.bean.CompetitionTeam" table="competition_team" catalog="java">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+
+        <property name="leaderId" type="java.lang.Integer">
+            <column name="leader_id" not-null="true"/>
+        </property>
+
+        <property name="member1Id" type="java.lang.Integer">
+            <column name="member1_id"/>
+        </property>
+
+        <property name="member2Id" type="java.lang.Integer">
+            <column name="member2_id"/>
+        </property>
+        <property name="member3Id" type="java.lang.Integer">
+            <column name="member3_id"/>
+        </property>
+        <property name="member4Id" type="java.lang.Integer">
+            <column name="member4_id"/>
+        </property>
+        <property name="projectFunction" type="java.lang.String">
+            <column name="project_function" length="100"/>
+        </property>
+
+        <property name="projectDetails" type="java.lang.String">
+            <column name="project_details" length="40"/>
+        </property>
+        <property name="projectName" type="java.lang.String">
+            <column name="project_name" length="40"/>
+        </property>
+
+        <property name="teamName" type="java.lang.String">
+            <column name="team_name" length="40"/>
+        </property>
+
+        <property name="likeCount" type="java.lang.String">
+            <column name="likecount" length="500"/>
+        </property>
+    </class>
+</hibernate-mapping>

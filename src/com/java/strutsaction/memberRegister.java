@@ -64,7 +64,6 @@ public class memberRegister implements Action {
             response.addCookie(id);
             response.addCookie(phone);
             dao.memberPresent(m.getId());
-
             return "success";
         } else
             return "error";

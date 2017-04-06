@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.java.bean.CompetitionScore" table="competition_score" catalog="java">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+        </id>
+        <property name="score1" type="java.lang.Integer">
+            <column name="score1" length="3"/>
+        </property>
+
+        <property name="score2" type="java.lang.Integer">
+            <column name="score2" length="3"/>
+        </property>
+
+        <property name="score3" type="java.lang.Integer">
+            <column name="score3" length="3"/>
+        </property>
+
+        <property name="score4" type="java.lang.Integer">
+            <column name="score4" length="3"/>
+        </property>
+
+        <property name="special" type="java.lang.Integer">
+            <column name="special" length="3"/>
+        </property>
+
+        <property name="total" type="java.lang.Integer">
+            <column name="total" length="3"/>
+        </property>
+
+        <property name="teamid" type="java.lang.Integer">
+            <column name="teamid" length="4"/>
+        </property>
+
+        <property name="comment" type="java.lang.String">
+            <column name="comment" length="1000"/>
+        </property>
+    </class>
+</hibernate-mapping>

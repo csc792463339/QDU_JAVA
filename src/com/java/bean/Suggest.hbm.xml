@@ -2,21 +2,20 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.java.bean.Present" table="present" catalog="java">
+    <class name="com.java.bean.Suggest" table="suggest" catalog="java">
 
         <id name="id" type="java.lang.Integer">
             <column name="id"/>
             <generator class="identity"/>
         </id>
 
-        <property name="mid" type="java.lang.String">
-            <column name="mid" length="1500"/>
+        <property name="mid" type="java.lang.Integer">
+            <column name="mid" length="4"/>
         </property>
 
-        <property name="name" type="java.lang.String">
-            <column name="name" length="100"/>
+        <property name="suggest" type="java.lang.String">
+            <column name="suggest" length="200"/>
         </property>
-
 
     </class>
 </hibernate-mapping>

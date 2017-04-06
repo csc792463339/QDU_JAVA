@@ -33,22 +33,10 @@ public class test {
 		 */
 
         IDao<Member> dao = new DaoImpl<Member>();
-        //List<Member> list = dao.queryPresent("1");
-        //for(int i=0;i<list.size();i++){
-        //System.out.println(list.get(i).getId());
-        //}
-        //IDao<Question> dao1=new DaoImpl<Question>();
-
-        //dao1.likeQuestion("12");
-
-        int i = 1;
-        List<Member> list = dao.queryPresent("0");
-        for (Member m : list) {
-            if (m.getCampus().equals("中心校区")) {
-                System.out.println(m.getPhone());
-            }
+        List<Member> list= dao.queryDepartment("2");
+        for(Member m:list){
+            System.out.println(m.getName()+" QQ:"+m.getQq());
         }
-
 
 
 		/*int i=1;

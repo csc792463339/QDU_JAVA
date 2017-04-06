@@ -59,7 +59,5 @@ public class memberConfirm implements Action {
         } else {
             return "error";
         }
-
-
     }
 }

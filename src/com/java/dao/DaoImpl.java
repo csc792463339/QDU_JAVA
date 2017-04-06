@@ -1,14 +1,15 @@
 package com.java.dao;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.FileReader;
 import java.util.List;
 
+import com.java.bean.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import com.java.bean.Member;
 import com.java.factory.SF;
 
 public class DaoImpl<T> implements IDao<T> {
@@ -62,6 +63,47 @@ public class DaoImpl<T> implements IDao<T> {
             e.printStackTrace();
             if (tx != null)
                 tx.rollback();
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
+    @Override
+    public List queryBookSite(String number) {
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            String hl = "SELECT member.id,member.name,member.phone,member.qq,member.college,member.grade,member.major,member.campus,member.dormitory,member.department,member.date,booksite.id,booksite.mid,booksite.time,booksite.number from member JOIN booksite ON member.id=booksite.mid WHERE booksite.number=2";
+            Query query = session.createSQLQuery(hl).addEntity(Member.class).addEntity(BookSite.class);
+            List data = query.list();
+            tx.commit();
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx != null)
+                tx.rollback();
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
+    @Override
+    public List queryCompetitionMember() {
+
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            String hql = "from Member where dormitory='比赛'";
+            Query query = session.createQuery(hql);
+            List<Member> list = query.list();
+            tx.commit();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         } finally {
             if (session != null)
@@ -143,6 +185,41 @@ public class DaoImpl<T> implements IDao<T> {
         }
     }
 
+    @Override
+    public CompetitionTeam getCurrentTeam() {
+        int currentTeam = 0;
+        File comTeam = new File("currentTeam");
+        try {
+            FileReader fr = new FileReader(comTeam);
+            char[] c = new char[10];
+            fr.read(c);
+            fr.close();
+            String s = "";
+            for (char cc : c) {
+                s = s + cc;
+            }
+            currentTeam = Integer.parseInt(s.trim());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            String hql = "from CompetitionTeam where id=:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", currentTeam);
+            List list = query.list();
+            tx.commit();
+            return (CompetitionTeam) list.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
 
     @Override
     public boolean memberChangeDep(String phone, String dep) {
@@ -168,12 +245,42 @@ public class DaoImpl<T> implements IDao<T> {
 
     @Override
     public boolean memberPresent(int mid) {
+        File file = new File("present");
+        String present = new String();
+        int pid = 0;
+        try {
+            FileReader fr = new FileReader(file);
+            char[] p = new char[10];
+            fr.read(p);
+            fr.close();
+            for (int i = 0; i < p.length; i++) {
+                present = present + p[i];
+            }
+            pid = Integer.parseInt(present.trim());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             session = SF.getSession();
             tx = session.beginTransaction();
-            String hql = "update Present p set p.p1=1 where p.mid=:mid";
-            Query query = session.createQuery(hql);
-            query.setParameter("mid", mid);
+            Query query = session.createQuery("select mid from Present where id=" + pid);
+            String presentOld = query.list().get(0).toString();
+            if (presentOld.equals("0")) {
+                presentOld = mid + ",";
+            } else {
+                String[] presentArray = presentOld.split(",");
+                String smid = String.valueOf(mid).trim();
+                for (String id : presentArray) {
+                    if (id.equals(smid)) {
+                        return true;
+                    }
+                }
+                presentOld = presentOld + smid + ",";
+            }
+            String hql = "update  Present  set mid=:newPresent where id=:id";
+            query = session.createQuery(hql);
+            query.setParameter("newPresent", presentOld);
+            query.setParameter("id", pid);
             query.executeUpdate();
             tx.commit();
             return true;
@@ -184,19 +291,22 @@ public class DaoImpl<T> implements IDao<T> {
             if (session != null)
                 session.close();
         }
-
     }
 
     @Override
-    public List<Member> queryPresent(String state) {
+    public List<Member> queryPresent(String pid) {
         try {
             session = SF.getSession();
             tx = session.beginTransaction();
-
-            SQLQuery query = session
-                    .createSQLQuery("select * from member join present on member.id= present.mid where present.p1=?")
-                    .addEntity(Member.class);
-            query.setString(0, state);
+            Query query = session.createQuery("select mid from Present where id=" + pid);
+            String presentmid = query.list().get(0).toString();
+            if (presentmid.equals("0")) {
+                presentmid = "(0)";
+            } else {
+                presentmid = "(" + presentmid.substring(0, presentmid.length() - 1) + ")";
+            }
+            query = session
+                    .createSQLQuery("select * from member where member.id in " + presentmid).addEntity(Member.class);
             List<Member> data = query.list();
             tx.commit();
             return data;
@@ -243,12 +353,32 @@ public class DaoImpl<T> implements IDao<T> {
     }
 
     @Override
-    public void likeQuestion(String id) {
+    public List<Message> queryMessage() {
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            Query query = session.createQuery("from Message m order by m.num desc");
+            List<Message> data = query.list();
+            tx.commit();
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx != null)
+                tx.rollback();
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
+    @Override
+    public void likeMessage(String id) {
 
         try {
             session = SF.getSession();
             tx = session.beginTransaction();
-            String hql = "update Question q set q.num=q.num+1 where q.id=:id";
+            String hql = "update Message q set q.num=q.num+1 where q.id=:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", Integer.parseInt(id));
             query.executeUpdate();
@@ -262,44 +392,34 @@ public class DaoImpl<T> implements IDao<T> {
     }
 
     @Override
-    public HashMap<String, String> count() {
-        HashMap<String, String> map = null;
+    public int getCount(Class<T> cls, int n) {
+        int num = 0;
         try {
             session = SF.getSession();
             tx = session.beginTransaction();
-            map = new HashMap<String, String>();
-            SQLQuery query = session.createSQLQuery("select count(*) from present where p1='1'");
-            map.put("memberPresent", query.list().get(0).toString());
-            query = session.createSQLQuery("select count(*) from present where p1='2'");
-            map.put("memberAbsent", query.list().get(0).toString());
-            query = session.createSQLQuery("select count(*) from member where department='技术部'");
-            map.put("tech", query.list().get(0).toString());
-            query = session.createSQLQuery("select count(*) from member where department='秘书部'");
-            map.put("clerk", query.list().get(0).toString());
-            query = session.createSQLQuery("select count(*) from member where department='活动部'");
-            map.put("activity", query.list().get(0).toString());
+            String hql = "select mid from BookSite b where b.number=:n1";
+            Query query = session.createQuery(hql);
+            query.setParameter("n1", n);
+            num = query.list().size();
             tx.commit();
-            return map;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         } finally {
             if (session != null)
                 session.close();
         }
-
+        return num;
     }
 
     @Override
-    public boolean memberAbsent(String phone) {
-
+    public boolean updateScore(CompetitionScore score) {
         try {
             session = SF.getSession();
             tx = session.beginTransaction();
-            String hql = "update Present p set p.p1=2 where p.mid in (select id from Member m where m.phone=:phone)";
-            Query query = session.createQuery(hql);
-            query.setParameter("phone", phone);
-            query.executeUpdate();
+            String sql = "update  competition_score set score1=" + score.getScore1() + ",score2=" + score.getScore2() + ",score3=" + score.getScore3() + ",special=" + score.getSpecial() + ",comment=\'" +
+                    score.getComment() + "\' where teamid=" + score.getTeamid();
+            Query q = session.createSQLQuery(sql);
+            q.executeUpdate();
             tx.commit();
             return true;
         } catch (Exception e) {
@@ -310,4 +430,25 @@ public class DaoImpl<T> implements IDao<T> {
                 session.close();
         }
     }
+
+    @Override
+    public List<CompetitionScore> queryScore() {
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            Query query = session.createQuery("from CompetitionScore s order by s.total desc");
+            List<CompetitionScore> data = query.list();
+            tx.commit();
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx != null)
+                tx.rollback();
+            return null;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
 }

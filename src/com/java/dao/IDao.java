@@ -1,14 +1,18 @@
 package com.java.dao;
 
 
+import java.awt.print.Book;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.java.bean.Member;
+import com.java.bean.*;
 
 public interface IDao<T> {
-    public void likeQuestion(String id);
+    public void likeMessage(String id);
+
+    public int getCount(Class<T> cls, int n);
 
     public boolean add(T t);
 
@@ -18,19 +22,28 @@ public interface IDao<T> {
 
     public boolean memberPresent(int mid);
 
-    public boolean memberAbsent(String phone);
-
     public T query(Class<T> cls, int id);
 
     public T queryPhone(Class<T> cls, String phone);
 
     public T queryQq(Class<T> cls, String phone);
 
+    public CompetitionTeam getCurrentTeam();
+
     public List<T> queryAll(Class<T> cls);
 
-    public List<Member> queryPresent(String state);
+    public List queryBookSite(String number);
+
+    public List queryCompetitionMember();
+
+    public List<Member> queryPresent(String pid);
 
     public List<Member> queryDepartment(String dep);
 
-    public HashMap<String, String> count();
+    public List<Message> queryMessage();
+
+    public List<CompetitionScore> queryScore();
+
+    public boolean updateScore(CompetitionScore score);
+
 }
